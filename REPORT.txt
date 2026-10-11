@@ -1,0 +1,12 @@
+Report
+
+I implemented a Binary Search Tree and a Hash Table in Java to compare insertion, searching, and deletion. BST stores smaller keys on the left and larger keys on the right, without balancing itself. The Hash Table uses linked lists for collisions and doubles its capacity before its load factor exceeds 0.75.
+For the BST, all three operations have a best case time of O(1) when only constant work near the root is needed. With random insertion, their expected time is O(log n). Sorted insertion creates a chain, so an operation can take O(n) in the worst case.
+
+For the Hash Table, all three operations have a best case of O(1). With well distributed keys, searching and deletion take expected O(1), while insertion takes expected amortized O(1). Amortized means that occasional resizing costs are spread between many insertions. All operations can take O(n) if keys collide; insertion can also take O(n) during resizing.
+
+I tested 100, 1,000, and 10,000 elements using System.nanoTime(), five warmup trials, and seven measured trials per case. For 10,000 random keys, median BST insertion, successful searching, and deletion took 1.052 ms, 0.990 ms, and 1.064 ms. Hash Table times were 0.452 ms, 0.085 ms, and 0.102 ms, respectively. Each time covers a whole batch of 10,000 operations.
+
+Sorted input made BST insertion take 211.337 ms at 10,000 keys. Forcing all hash keys into one bucket made successful searching take 145.022 ms. These cases show how tree shape and collisions can damage performance.
+
+I concluded that performance depends on key order, hash distribution, resizing, memory access, and JVM overhead. Small tests are especially sensitive to noise. Hash Table is usually suitable for exact lookups. BST is useful when ordering matters, but balancing is needed to guarantee logarithmic worst case operations.
